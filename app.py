@@ -52,7 +52,7 @@ if st.session_state["step"] == 0:
 
 # --- Step 1: Canvas Experience ---
 elif st.session_state["step"] == 1:
-    ask_question(f"{st.session_state['name']}, have you used Canvas before?", "canvas_experience", ["Yes", "No"])question_number=1)
+    ask_question(f"{st.session_state['name']}, have you used Canvas before?", "canvas_experience", ["Yes", "No"]
     if st.button("Next"):
         st.session_state["step"] += 1
 
