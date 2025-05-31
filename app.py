@@ -78,22 +78,3 @@ Write the summary as if you're advising a student in a warm, professional tone.
         result = response.choices[0].message.content
         st.markdown("### 🎯 Your Personalized Pathway:")
         st.write(result)
-
-
-
-Responses:
-{st.session_state['responses']}
-
-Write the summary as if you're advising a student in a warm, professional tone.
-"""
-        response = client.chat.completions.create(
-            model="gpt-4",
-            messages=[
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-            max_tokens=500
-        )
-        result = response.choices[0].message.content
-        st.markdown("### 🎯 Your Personalized Pathway:")
-        st.write(result)
