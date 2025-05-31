@@ -42,7 +42,7 @@ def ask_question(label, key, options=None, text_input=False):
 
 # --- Step 0: Ask for Name ---
 if st.session_state["step"] == 0:
-    name = st.text_input("👋 Welcome! What’s your first name?")
+    name = st.text_input("👋 Welcome! What’s your first name? Type or select your answers below")
     if name:
         st.session_state["name"] = name
         if st.button("Start"):
