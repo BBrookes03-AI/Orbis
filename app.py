@@ -22,19 +22,50 @@ def ask_question(label, key, options=None, text_input=False):
         response = st.radio(label, options)
     st.session_state["responses"][key] = response
 
-# Question 1: Canvas Experience
-ask_question("Have you used Canvas before?", "canvas_experience", ["Yes", "No"])
-if st.session_state["responses"].get("canvas_experience") == "Yes":
-    ask_question("Would you like a quick review of advanced Canvas features?", "canvas_advanced_opt_in", ["Yes", "No"])
+# --- Step 0: Ask for Name ---
+if st.session_state["step"] == 0:
+    name = st.text_input("👋 Welcome! What’s your first name?")
+    if name:
+        st.session_state["name"] = name
+        if st.button("Start"):
+            st.session_state["step"] += 1
 
-# Question 2: Writing Frequency
-ask_question("How often do you engage in writing?", "writing_frequency", ["Daily", "Weekly", "Occasionally", "Rarely"])
-ask_question("What kinds of writing do you do most often?", "writing_type", ["Emails", "Blogs", "Academic Papers", "Social Media", "Technical Reports"])
+# --- Step 1: Canvas Experience ---
+elif st.session_state["step"] == 1:
+    ask_question(f"{st.session_state['name']}, have you used Canvas before?", "canvas_experience", ["Yes", "No"])
+    if st.button("Next"):
+        st.session_state["step"] += 1
 
+# --- Step 2: Advanced Canvas Review (Conditional) ---
+elif st.session_state["step"] == 2:
+    if st.session_state["responses"].get("canvas_experience") == "Yes":
+        ask_question("Would you like a quick review of advanced Canvas features?", "canvas_advanced_opt_in", ["Yes", "No"])
+    else:
+        st.write("Thanks! We'll recommend a Canvas Orientation Module later.")
+    if st.button("Next"):
+        st.session_state["step"] += 1
+
+# --- Step 3: Writing Frequency ---
+elif st.session_state["step"] == 3:
+    ask_question("How often do you engage in writing?", "writing_frequency", ["Daily", "Weekly", "Occasionally", "Rarely"])
+    if st.button("Next"):
+        st.session_state["step"] += 1
+
+# --- Step 4: Writing Type ---
+elif st.session_state["step"] == 4:
+    ask_question("What kinds of writing do you do most often?", "writing_type", ["Emails", "Blogs", "Academic Papers", "Social Media", "Technical Reports"])
+    if st.button("Next"):
+        st.session_state["step"] += 1
 # --- Submit ---
-if st.button("Generate My Learning Path"):
-    with st.spinner("Generating your personalized onboarding plan..."):
-        prompt = f"""Using the following responses, create a 2-paragraph personalized onboarding summary with tone, resources, and module suggestions.
+prompt = f"""Using the following student responses, create a 2-paragraph personalized onboarding summary for {st.session_state['name']}.
+Include tone-appropriate encouragement, suggest relevant modules or tools, and embed reflection-based guidance.
+
+Responses:
+{st.session_state['responses']}
+
+Be warm, professional, and thoughtful in your phrasing.
+"""
+
 
 Responses:
 {st.session_state['responses']}
