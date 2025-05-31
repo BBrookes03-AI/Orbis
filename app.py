@@ -53,7 +53,14 @@ if st.session_state["step"] == 0:
 # --- Step 1: Canvas Experience ---
 elif st.session_state["step"] == 1:
     ask_question(f"{st.session_state['name']}, have you used Canvas before?", "canvas_experience", ["Yes", "No"]
-    if st.button("Next"):
+   col1, col2 = st.columns(2)
+
+with col1:
+    if st.button("⬅️ Back") and st.session_state["step"] > 0:
+        st.session_state["step"] -= 1
+
+with col2:
+    if st.button("Next ➡️"):
         st.session_state["step"] += 1
 
 # --- Step 2: Advanced Canvas Review (Conditional) ---
@@ -62,7 +69,14 @@ elif st.session_state["step"] == 2:
         ask_question("Would you like a quick review of advanced Canvas features?", "canvas_advanced_opt_in", ["Yes", "No"])
     else:
         st.write("Thanks! We'll recommend a Canvas Orientation Module later.")
-    if st.button("Next"):
+col1, col2 = st.columns(2)
+
+with col1:
+    if st.button("⬅️ Back") and st.session_state["step"] > 0:
+        st.session_state["step"] -= 1
+
+with col2:
+    if st.button("Next ➡️"):
         st.session_state["step"] += 1
 
 # --- Step 3: Writing Frequency ---
