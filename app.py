@@ -43,7 +43,7 @@ Responses:
 
 Write the summary as if you're advising a student in a warm, professional tone.
 """
-        response = openai.ChatCompletion.create(
+        response = openai.client.chat.completions.create(
             model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7,
