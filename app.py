@@ -5,6 +5,14 @@ import os
 # --- Configuration ---
 client = OpenAI(api_key=st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY")))
 
+# --- Session State Setup (move this right after config) ---
+if "responses" not in st.session_state:
+    st.session_state["responses"] = {}
+if "step" not in st.session_state:
+    st.session_state["step"] = 0
+if "name" not in st.session_state:
+    st.session_state["name"] = ""
+
 # --- Page Setup ---
 st.set_page_config(page_title="Orbis Onboarding", layout="centered")
 st.title("🧭 Orbis Onboarding: Adaptive Learning Pathway")
