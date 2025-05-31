@@ -64,6 +64,39 @@ elif st.session_state["step"] == 4:
     ask_question("What kinds of writing do you do most often?", "writing_type", ["Emails", "Blogs", "Academic Papers", "Social Media", "Technical Reports"])
     if st.button("Next"):
         st.session_state["step"] += 1
+
+# --- Step 5: Citation Comfort ---
+elif st.session_state["step"] == 5:
+    ask_question("How confident are you with APA or MLA citation?", "citation_comfort", ["Very Comfortable", "Somewhat", "Not at All"])
+    if st.button("Next"):
+        st.session_state["step"] += 1
+
+# --- Step 6: Literature or Media Preference ---
+elif st.session_state["step"] == 6:
+    ask_question("What books, genres, or topics do you enjoy reading or watching?", "literature_preference", text_input=True)
+    if st.button("Next"):
+        st.session_state["step"] += 1
+
+# --- Step 7: AI Tool Usage ---
+elif st.session_state["step"] == 7:
+    ask_question("Have you used tools like ChatGPT or Grammarly for school or work?", "ai_usage", ["Yes", "No"])
+    if st.session_state["responses"].get("ai_usage") == "Yes":
+        ask_question("Are you aware of the course’s AI usage policy?", "ai_policy_awareness", ["Yes", "No"])
+    if st.button("Next"):
+        st.session_state["step"] += 1
+
+# --- Step 8: Time Management Habit ---
+elif st.session_state["step"] == 8:
+    ask_question("Do you schedule weekly time to work on courses?", "time_management", ["Yes", "No", "Sometimes"])
+    if st.button("Next"):
+        st.session_state["step"] += 1
+
+# --- Step 9: Course Intention (Final) ---
+elif st.session_state["step"] == 9:
+    ask_question("What do you hope to gain from this course?", "course_intention", text_input=True)
+    if st.button("Finish and Generate My Learning Path"):
+        st.session_state["step"] += 1
+
 # --- Submit ---
 if st.session_state["step"] == 10:
     with st.spinner("Generating your personalized onboarding plan..."):
