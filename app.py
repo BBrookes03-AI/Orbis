@@ -16,8 +16,7 @@ if "name" not in st.session_state:
 # --- Page Setup ---
 st.set_page_config(page_title="Orbis Onboarding", layout="centered")
 st.title("🧭 Orbis Onboarding: Adaptive Learning Pathway")
-st.markdown("Welcome! Please answer the following questions to help us personalize your learning journey. 
-The answers you provide will help to tailor the experience you will later have based on adaptive branching within the AI and applied to the class's logic.")
+st.markdown("Welcome! Please answer the following questions to help us personalize your learning journey. The answers you provide will help to tailor the experience you will later have based on adaptive branching within the AI and applied to the class's logic.")
 
 st.markdown("""
 ---
