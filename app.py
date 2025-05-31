@@ -1,9 +1,9 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 import os
 
 # --- Configuration ---
-openai.api_key = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY")))
 
 # --- Page Setup ---
 st.set_page_config(page_title="Orbis Onboarding", layout="centered")
@@ -31,8 +31,6 @@ if st.session_state["responses"].get("canvas_experience") == "Yes":
 ask_question("How often do you engage in writing?", "writing_frequency", ["Daily", "Weekly", "Occasionally", "Rarely"])
 ask_question("What kinds of writing do you do most often?", "writing_type", ["Emails", "Blogs", "Academic Papers", "Social Media", "Technical Reports"])
 
-# Additional questions coming...
-
 # --- Submit ---
 if st.button("Generate My Learning Path"):
     with st.spinner("Generating your personalized onboarding plan..."):
@@ -43,17 +41,14 @@ Responses:
 
 Write the summary as if you're advising a student in a warm, professional tone.
 """
-response = client.chat.completions.create(
-    model="gpt-4",
-    messages=[
-        {"role": "user", "content": prompt}
-    ],
-    temperature=0.7,
-    max_tokens=500
-)
-
-result = response.choices[0].message.content
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=500
         )
-        result = response["choices"][0]["message"]["content"]
+        result = response.choices[0].message.content
         st.markdown("### 🎯 Your Personalized Pathway:")
         st.write(result)
