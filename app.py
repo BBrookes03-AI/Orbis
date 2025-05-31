@@ -57,14 +57,28 @@ elif st.session_state["step"] == 4:
     if st.button("Next"):
         st.session_state["step"] += 1
 # --- Submit ---
-prompt = f"""Using the following student responses, create a 2-paragraph personalized onboarding summary for {st.session_state['name']}.
+if st.session_state["step"] == 10:
+    with st.spinner("Generating your personalized onboarding plan..."):
+        prompt = f"""Using the following student responses, create a 2-paragraph personalized onboarding summary for {st.session_state['name']}.
 Include tone-appropriate encouragement, suggest relevant modules or tools, and embed reflection-based guidance.
 
 Responses:
 {st.session_state['responses']}
 
-Be warm, professional, and thoughtful in your phrasing.
+Write the summary as if you're advising a student in a warm, professional tone.
 """
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=500
+        )
+        result = response.choices[0].message.content
+        st.markdown("### 🎯 Your Personalized Pathway:")
+        st.write(result)
+
 
 
 Responses:
