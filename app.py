@@ -18,6 +18,16 @@ st.set_page_config(page_title="Orbis Onboarding", layout="centered")
 st.title("🧭 Orbis Onboarding: Adaptive Learning Pathway")
 st.markdown("Welcome! Please answer the following questions to help us personalize your learning journey.")
 
+st.markdown("""
+---
+Please answer the following questions honestly. Your responses will help us create a personalized onboarding experience tailored to your needs.
+
+**Note:** Your answers are processed using secure OpenAI API services to generate your customized learning plan. No personal identifiers beyond your name are stored or used.
+
+---
+""")
+
+
 # --- Session State Setup ---
 if "responses" not in st.session_state:
     st.session_state["responses"] = {}
