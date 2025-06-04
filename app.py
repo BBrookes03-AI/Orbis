@@ -17,15 +17,28 @@ if "user_name" not in st.session_state:
 st.set_page_config(page_title="Orbis Onboarding", layout="centered")
 st.markdown("### 🧭 Orbis Onboarding: Adaptive Learning Pathway")
 
+# --- Intro Section (Main Content) ---
 st.markdown("""
 Welcome! Please answer the following questions to help us personalize your learning journey.
 
 ---
+
 Your responses will guide your onboarding experience. No scores are generated—only personalized recommendations.
 
-**Note:** This tool uses OpenAI's API for processing your responses. No personal data beyond your name is stored.
 ---
 """)
+
+# --- Disclaimer (Smaller Font at the Bottom) ---
+st.markdown(
+    """
+    <div style='font-size: 0.8em; color: gray; margin-top: 1em;'>
+        <strong>Note:</strong> This tool uses OpenAI's API for processing your responses. 
+        No personal data beyond your name is stored.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 
 # --- Helper Function ---
 def ask_question(label, key, options=None, text_input=False, question_number=None):
