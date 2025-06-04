@@ -300,6 +300,33 @@ Write the summary as if you're advising a student in a warm, professional tone.
         st.markdown("### 🎯 Your Personalized Pathway:")
         st.write(result)
 
+import requests
+import datetime
+
+# --- Zapier Webhook URL ---
+zapier_webhook_url = "https://hooks.zapier.com/hooks/catch/23212068/2vgzbzc/"
+
+# --- Prepare Payload ---
+payload = {
+    "timestamp": datetime.datetime.now().isoformat(),
+    "name": st.session_state.get("user_name", ""),
+    "summary": result,
+    "canvas_experience": st.session_state["responses"].get("canvas_experience", ""),
+    "ai_usage": st.session_state["responses"].get("ai_usage", "")
+    # Add more fields here if needed, e.g.:
+    # "writing_type": ", ".join(st.session_state["responses"].get("writing_type", [])),
+    # "ai_policy_awareness": st.session_state["responses"].get("ai_policy_awareness", "")
+}
+
+# --- Send to Zapier ---
+try:
+    zapier_response = requests.post(zapier_webhook_url, json=payload)
+    zapier_response.raise_for_status()
+except Exception as e:
+    st.warning("⚠️ Submission to Google Sheets failed.")
+    print("Zapier webhook error:", e)
+
+
 # --- Footer Disclaimer ---
 st.markdown(
     """
