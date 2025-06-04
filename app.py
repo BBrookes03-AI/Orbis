@@ -292,3 +292,16 @@ Write the summary as if you're advising a student in a warm, professional tone.
         result = response.choices[0].message.content
         st.markdown("### 🎯 Your Personalized Pathway:")
         st.write(result)
+
+# --- Footer Disclaimer ---
+st.markdown(
+    """
+    <hr style="margin-top: 2em; margin-bottom: 1em;">
+    <div style='font-size: 0.8em; color: gray; text-align: center;'>
+        <strong>Note:</strong> This tool uses OpenAI's API for processing your responses.
+        No personal data beyond your name is stored.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
