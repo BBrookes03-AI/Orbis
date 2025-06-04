@@ -309,7 +309,7 @@ Write the summary as if you're advising a student in a warm, professional tone.
         import requests
         import datetime
 
-        zapier_webhook_url = "https://hooks.zapier.com/hooks/catch/23212068/2vgzbzc/"
+        zapier_webhook_url = st.secrets.get("ZAPIER_URL")
         payload = {
             "timestamp": datetime.datetime.now().isoformat(),
             "name": st.session_state.get("user_name", ""),
