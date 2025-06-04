@@ -70,10 +70,14 @@ elif st.session_state["step"] == 1:
         ["Yes", "No"],
         question_number=1,
     )
-    if st.button("Next ➡️", key="next_step1"):
-        st.session_state["step"] += 1
-    if st.button("⬅️ Back", key="back_step1"):
+col1, col2, col3 = st.columns([2, 4, 2])
+with col1:
+    if st.button("⬅️ Back", key="back_stepX", use_container_width=True):
         st.session_state["step"] -= 1
+with col3:
+    if st.button("Next ➡️", key="next_stepX", use_container_width=True):
+        st.session_state["step"] += 1
+
 
 # Step 2
 elif st.session_state["step"] == 2:
