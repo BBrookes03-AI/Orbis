@@ -17,15 +17,6 @@ if "name" not in st.session_state:
 st.set_page_config(page_title="Orbis Onboarding", layout="centered")
 st.markdown("### 🧭 Orbis Onboarding: Adaptive Learning Pathway")
 
-st.markdown("""
-Welcome! Please answer the following questions to help us personalize your learning journey.
-
----
-Your responses will guide your onboarding experience. No scores are generated—only personalized recommendations.
-
-**Note:** This tool uses OpenAI's API for processing your responses. No personal data beyond your name is stored.
----
-""")
 
 # --- Helper Function ---
 def ask_question(label, key, options=None, text_input=False, question_number=None):
@@ -48,6 +39,7 @@ if st.session_state["step"] == 0:
         st.session_state["name"] = st.session_state["responses"]["name"]
     if st.button("Start ➡️"):
         st.session_state["step"] += 1
+    st.caption("Note: This tool uses OpenAI's API for processing your responses. No personal data beyond your name is stored.")
 
 # Step 1
 elif st.session_state["step"] == 1:
