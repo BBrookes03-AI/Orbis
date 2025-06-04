@@ -119,6 +119,7 @@ elif st.session_state["step"] == 3:
 # Step 4
 elif st.session_state["step"] == 4:
     st.markdown("**Question 4**")
+    st.markdown("What kinds of writing do you do most often? Select all that apply:")
 
     options = [
         "Emails",
@@ -131,27 +132,20 @@ elif st.session_state["step"] == 4:
         "Personal Journals or Reflections"
     ]
 
-    # Split into two columns for layout
+    # Divide into two columns
     col1, col2 = st.columns(2)
-    half = len(options) // 2
+    selected = []
 
-    with col1:
-        selected_1 = st.multiselect(
-            "What kinds of writing do you do most often?",
-            options[:half],
-            key="writing_type_col1"
-        )
-    with col2:
-        selected_2 = st.multiselect(
-            " ",
-            options[half:],
-            key="writing_type_col2"
-        )
+    for i, option in enumerate(options):
+        col = col1 if i < len(options) / 2 else col2
+        with col:
+            if st.checkbox(option, key=f"writing_type_checkbox_{i}"):
+                selected.append(option)
 
-    # Combine selections and store them
-    st.session_state["responses"]["writing_type"] = selected_1 + selected_2
+    # Store the combined selected options
+    st.session_state["responses"]["writing_type"] = selected
 
-    # Navigation buttons (horizontal layout)
+    # Navigation buttons
     col1, col2, col3 = st.columns([2, 4, 2])
     with col1:
         if st.button("⬅️ Back", key="back_step4", use_container_width=True):
