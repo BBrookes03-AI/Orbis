@@ -31,15 +31,34 @@ Your responses will guide your onboarding experience. No scores are generated—
 # --- Helper Function ---
 def ask_question(label, key, options=None, text_input=False, question_number=None):
     if question_number is not None:
-        st.markdown(f"**Question {question_number}**")
-    if text_input:
-        response = st.text_input(label, key=key)
+        st.markdown(
+            f"""
+            <div style="background-color: #ffffff; border-left: 4px solid #4F8A8B; padding: 0.75em; margin-top: 1em; margin-bottom: 1em;">
+                <strong>Question {question_number}:</strong> {label}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
     else:
-        response = st.radio(label, options, index=None, key=key)
+        st.markdown(
+            f"""
+            <div style="background-color: #ffffff; border-left: 4px solid #4F8A8B; padding: 0.75em; margin-top: 1em; margin-bottom: 1em;">
+                {label}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    if text_input:
+        response = st.text_input("", key=key)
+    else:
+        response = st.radio("", options, index=None, key=key)
+
     if response:
         st.session_state["responses"][key] = response
         return True
     return False
+
 
 # --- Step Logic ---
 
