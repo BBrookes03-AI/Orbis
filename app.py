@@ -29,7 +29,7 @@ Your responses will guide your onboarding experience. No scores are generated—
 
  
  # --- Helper Function ---
- def ask_question(label, key, options=None, text_input=False, question_number=None):
+def ask_question(label, key, options=None, text_input=False, question_number=None):
      if question_number is not None:
          st.markdown(f"**Question {question_number}**")
      if text_input:
