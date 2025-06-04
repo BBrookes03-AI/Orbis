@@ -130,10 +130,13 @@ elif st.session_state["step"] == 4:
         ],
         question_number=4,
     )
-    if st.button("Next ➡️", key="next_step4"):
-        st.session_state["step"] += 1
-    if st.button("⬅️ Back", key="back_step4"):
-        st.session_state["step"] -= 1
+    col1, col2, col3 = st.columns([2, 4, 2])
+    with col1:
+        if st.button("⬅️ Back", key="back_step1", use_container_width=True):
+            st.session_state["step"] -= 1
+    with col3:
+        if st.button("Next ➡️", key="next_step1", use_container_width=True):
+            st.session_state["step"] += 1
 
 # Step 5
 elif st.session_state["step"] == 5:
@@ -143,10 +146,13 @@ elif st.session_state["step"] == 5:
         ["Very Comfortable", "Somewhat", "Not at All"],
         question_number=5,
     )
-    if st.button("Next ➡️", key="next_step5"):
-        st.session_state["step"] += 1
-    if st.button("⬅️ Back", key="back_step5"):
-        st.session_state["step"] -= 1
+    col1, col2, col3 = st.columns([2, 4, 2])
+    with col1:
+        if st.button("⬅️ Back", key="back_step1", use_container_width=True):
+            st.session_state["step"] -= 1
+    with col3:
+        if st.button("Next ➡️", key="next_step1", use_container_width=True):
+            st.session_state["step"] += 1
 
 # Step 6
 elif st.session_state["step"] == 6:
@@ -156,10 +162,13 @@ elif st.session_state["step"] == 6:
         text_input=True,
         question_number=6,
     )
-    if st.button("Next ➡️", key="next_step6"):
-        st.session_state["step"] += 1
-    if st.button("⬅️ Back", key="back_step6"):
-        st.session_state["step"] -= 1
+    col1, col2, col3 = st.columns([2, 4, 2])
+    with col1:
+        if st.button("⬅️ Back", key="back_step1", use_container_width=True):
+            st.session_state["step"] -= 1
+    with col3:
+        if st.button("Next ➡️", key="next_step1", use_container_width=True):
+            st.session_state["step"] += 1
 
 # Step 7
 elif st.session_state["step"] == 7:
@@ -175,10 +184,13 @@ elif st.session_state["step"] == 7:
             "ai_policy_awareness",
             ["Yes", "No"],
         )
-    if st.button("Next ➡️", key="next_step7"):
-        st.session_state["step"] += 1
-    if st.button("⬅️ Back", key="back_step7"):
-        st.session_state["step"] -= 1
+    col1, col2, col3 = st.columns([2, 4, 2])
+    with col1:
+        if st.button("⬅️ Back", key="back_step1", use_container_width=True):
+            st.session_state["step"] -= 1
+    with col3:
+        if st.button("Next ➡️", key="next_step1", use_container_width=True):
+            st.session_state["step"] += 1
 
 # Step 8
 elif st.session_state["step"] == 8:
@@ -188,10 +200,13 @@ elif st.session_state["step"] == 8:
         ["Yes", "No", "Sometimes"],
         question_number=8,
     )
-    if st.button("Next ➡️", key="next_step8"):
-        st.session_state["step"] += 1
-    if st.button("⬅️ Back", key="back_step8"):
-        st.session_state["step"] -= 1
+    col1, col2, col3 = st.columns([2, 4, 2])
+    with col1:
+        if st.button("⬅️ Back", key="back_step1", use_container_width=True):
+            st.session_state["step"] -= 1
+    with col3:
+        if st.button("Next ➡️", key="next_step1", use_container_width=True):
+            st.session_state["step"] += 1
 
 # Step 9
 elif st.session_state["step"] == 9:
@@ -201,10 +216,13 @@ elif st.session_state["step"] == 9:
         text_input=True,
         question_number=9,
     )
-    if st.button("Finish and Generate My Learning Path", key="next_step9"):
-        st.session_state["step"] += 1
-    if st.button("⬅️ Back", key="back_step9"):
-        st.session_state["step"] -= 1
+    col1, col2, col3 = st.columns([2, 4, 2])
+    with col1:
+        if st.button("⬅️ Back", key="back_step1", use_container_width=True):
+            st.session_state["step"] -= 1
+    with col3:
+        if st.button("Next ➡️", key="next_step1", use_container_width=True):
+            st.session_state["step"] += 1
 
 # Step 10: Final Output
 elif st.session_state["step"] == 10:
