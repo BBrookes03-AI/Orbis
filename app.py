@@ -271,18 +271,21 @@ elif st.session_state["step"] == 9:
         text_input=True,
         question_number=9,
     )
+
     col1, col2, col3 = st.columns([2, 4, 2])
     with col1:
-        if st.button("⬅️ Back", key="back_step1", use_container_width=True):
+        if st.button("⬅️ Back", key="back_step9", use_container_width=True):
             st.session_state["step"] -= 1
     with col3:
-        if st.button("Next ➡️", key="next_step1", use_container_width=True):
+        if st.button("Finish ✅", key="next_step9", use_container_width=True):
             st.session_state["step"] += 1
+            st.session_state["generate_summary"] = True  # Trigger only on button press
 
 # Step 10: Final Output
 elif st.session_state["step"] == 10:
-    with st.spinner("Generating your personalized onboarding plan..."):
-        prompt = f"""Using the following student responses, create a 2-paragraph personalized onboarding summary for {st.session_state['user_name']}.
+    if st.session_state.get("generate_summary", False):
+        with st.spinner("Generating your personalized onboarding plan..."):
+            prompt = f"""Using the following student responses, create a 2-paragraph personalized onboarding summary for {st.session_state['user_name']}.
 Include tone-appropriate encouragement, suggest relevant modules or tools, and embed reflection-based guidance.
 
 Responses:
@@ -290,82 +293,51 @@ Responses:
 
 Write the summary as if you're advising a student in a warm, professional tone.
 """
-        response = client.chat.completions.create(
-            model="gpt-4",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.7,
-            max_tokens=500
-        )
-        result = response.choices[0].message.content
+            response = client.chat.completions.create(
+                model="gpt-4",
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.7,
+                max_tokens=500
+            )
+            result = response.choices[0].message.content
+
+        # Display GPT-generated summary
         st.markdown("### 🎯 Your Personalized Pathway:")
         st.write(result)
 
-import requests
-import datetime
+        # Submit to Google Sheets via Zapier
+        import requests
+        import datetime
 
-# Generate prompt and response
-with st.spinner("Generating your personalized onboarding plan..."):
-    prompt = f"""Using the following student responses, create a 2-paragraph personalized onboarding summary for {st.session_state['user_name']}.
-Include tone-appropriate encouragement, suggest relevant modules or tools, and embed reflection-based guidance.
+        zapier_webhook_url = "https://hooks.zapier.com/hooks/catch/23212068/2vgzbzc/"
+        payload = {
+            "timestamp": datetime.datetime.now().isoformat(),
+            "name": st.session_state.get("user_name", ""),
+            "summary": result,
+            "canvas_experience": st.session_state["responses"].get("canvas_experience", ""),
+            "ai_usage": st.session_state["responses"].get("ai_usage", ""),
+            "ai_policy_awareness": st.session_state["responses"].get("ai_policy_awareness", "")
+        }
 
-Responses:
-{st.session_state['responses']}
+        try:
+            zapier_response = requests.post(zapier_webhook_url, json=payload)
+            zapier_response.raise_for_status()
+            st.success("✅ Your response has been submitted for review.")
+        except Exception as e:
+            st.warning("⚠️ Submission to Google Sheets failed. Please notify your instructor.")
+            print("Zapier webhook error:", e)
 
-Write the summary as if you're advising a student in a warm, professional tone.
-"""
-    response = client.chat.completions.create(
-        model="gpt-4",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.7,
-        max_tokens=500
+        # Prevent re-trigger on rerun
+        st.session_state["generate_summary"] = False
+
+    # Footer
+    st.markdown(
+        """
+        <hr style="margin-top: 2em; margin-bottom: 1em;">
+        <div style='font-size: 0.8em; color: gray; text-align: center;'>
+            <strong>Note:</strong> This tool uses OpenAI's API for processing your responses.
+            No personal data beyond your name is stored.
+        </div>
+        """,
+        unsafe_allow_html=True
     )
-    result = response.choices[0].message.content
-
-# Display GPT-generated summary
-st.markdown("### 🎯 Your Personalized Pathway:")
-st.write(result)
-
-# Submit data to Google Sheets via Zapier
-zapier_webhook_url = "https://hooks.zapier.com/hooks/catch/23212068/2vgzbzc/"
-
-payload = {
-    "timestamp": datetime.datetime.now().isoformat(),
-    "name": st.session_state.get("user_name", ""),
-    "summary": result,
-    "canvas_experience": st.session_state["responses"].get("canvas_experience", ""),
-    "ai_usage": st.session_state["responses"].get("ai_usage", "")
-}
-
-try:
-    zapier_response = requests.post(zapier_webhook_url, json=payload)
-    zapier_response.raise_for_status()
-    st.success("✅ Your response has been submitted for review.")
-except Exception as e:
-    st.warning("⚠️ Submission to Google Sheets failed. Please notify your instructor.")
-    print("Zapier webhook error:", e)
-
-# Footer disclaimer
-st.markdown(
-    """
-    <hr style="margin-top: 2em; margin-bottom: 1em;">
-    <div style='font-size: 0.8em; color: gray; text-align: center;'>
-        <strong>Note:</strong> This tool uses OpenAI's API for processing your responses.
-        No personal data beyond your name is stored.
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-
-# --- Footer Disclaimer ---
-st.markdown(
-    """
-    <hr style="margin-top: 2em; margin-bottom: 1em;">
-    <div style='font-size: 0.8em; color: gray; text-align: center;'>
-        <strong>Note:</strong> This tool uses OpenAI's API for processing your responses.
-        No personal data beyond your name is stored.
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
