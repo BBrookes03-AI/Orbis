@@ -303,28 +303,58 @@ Write the summary as if you're advising a student in a warm, professional tone.
 import requests
 import datetime
 
-# --- Zapier Webhook URL ---
+# Generate prompt and response
+with st.spinner("Generating your personalized onboarding plan..."):
+    prompt = f"""Using the following student responses, create a 2-paragraph personalized onboarding summary for {st.session_state['user_name']}.
+Include tone-appropriate encouragement, suggest relevant modules or tools, and embed reflection-based guidance.
+
+Responses:
+{st.session_state['responses']}
+
+Write the summary as if you're advising a student in a warm, professional tone.
+"""
+    response = client.chat.completions.create(
+        model="gpt-4",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.7,
+        max_tokens=500
+    )
+    result = response.choices[0].message.content
+
+# Display GPT-generated summary
+st.markdown("### 🎯 Your Personalized Pathway:")
+st.write(result)
+
+# Submit data to Google Sheets via Zapier
 zapier_webhook_url = "https://hooks.zapier.com/hooks/catch/23212068/2vgzbzc/"
 
-# --- Prepare Payload ---
 payload = {
     "timestamp": datetime.datetime.now().isoformat(),
     "name": st.session_state.get("user_name", ""),
     "summary": result,
     "canvas_experience": st.session_state["responses"].get("canvas_experience", ""),
     "ai_usage": st.session_state["responses"].get("ai_usage", "")
-    # Add more fields here if needed, e.g.:
-    # "writing_type": ", ".join(st.session_state["responses"].get("writing_type", [])),
-    # "ai_policy_awareness": st.session_state["responses"].get("ai_policy_awareness", "")
 }
 
-# --- Send to Zapier ---
 try:
     zapier_response = requests.post(zapier_webhook_url, json=payload)
     zapier_response.raise_for_status()
+    st.success("✅ Your response has been submitted for review.")
 except Exception as e:
-    st.warning("⚠️ Submission to Google Sheets failed.")
+    st.warning("⚠️ Submission to Google Sheets failed. Please notify your instructor.")
     print("Zapier webhook error:", e)
+
+# Footer disclaimer
+st.markdown(
+    """
+    <hr style="margin-top: 2em; margin-bottom: 1em;">
+    <div style='font-size: 0.8em; color: gray; text-align: center;'>
+        <strong>Note:</strong> This tool uses OpenAI's API for processing your responses.
+        No personal data beyond your name is stored.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 
 # --- Footer Disclaimer ---
