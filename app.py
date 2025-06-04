@@ -200,7 +200,6 @@ elif st.session_state["step"] == 6:
 
 # Step 7
 elif st.session_state["step"] == 7:
-    st.markdown("**Question 7**")
     ask_question(
         "Have you used tools like ChatGPT or Grammarly for school or work?",
         "ai_usage",
