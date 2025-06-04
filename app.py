@@ -55,14 +55,16 @@ def ask_question(label, key, options=None, text_input=False, question_number=Non
 
 # --- Step Logic ---
 
-# Step 0: Name
+# Step 0: Ask for name
 if st.session_state["step"] == 0:
     ask_question("👋 What's your first name?", "name", text_input=True)
     st.session_state["user_name"] = st.session_state["responses"].get("name", "")
-    if st.button("Start ➡️", key="next_step0"):
-        st.session_state["step"] += 1
+    col1, col2, col3 = st.columns([2, 4, 2])
+    with col3:
+        if st.button("Next ➡️", key="next_step0", use_container_width=True):
+            st.session_state["step"] += 1
 
-# Step 1
+# Step 1: Canvas experience
 elif st.session_state["step"] == 1:
     ask_question(
         f"{st.session_state['user_name']}, have you used Canvas before?",
@@ -70,16 +72,15 @@ elif st.session_state["step"] == 1:
         ["Yes", "No"],
         question_number=1,
     )
-col1, col2, col3 = st.columns([2, 4, 2])
-with col1:
-    if st.button("⬅️ Back", key="back_stepX", use_container_width=True):
-        st.session_state["step"] -= 1
-with col3:
-    if st.button("Next ➡️", key="next_stepX", use_container_width=True):
-        st.session_state["step"] += 1
+    col1, col2, col3 = st.columns([2, 4, 2])
+    with col1:
+        if st.button("⬅️ Back", key="back_step1", use_container_width=True):
+            st.session_state["step"] -= 1
+    with col3:
+        if st.button("Next ➡️", key="next_step1", use_container_width=True):
+            st.session_state["step"] += 1
 
-
-# Step 2
+# Step 2: Advanced Canvas review
 elif st.session_state["step"] == 2:
     if st.session_state["responses"].get("canvas_experience") == "Yes":
         ask_question(
@@ -90,12 +91,15 @@ elif st.session_state["step"] == 2:
         )
     else:
         st.markdown("Thanks! We'll recommend a Canvas Orientation Module later.")
-    if st.button("Next ➡️", key="next_step2"):
-        st.session_state["step"] += 1
-    if st.button("⬅️ Back", key="back_step2"):
-        st.session_state["step"] -= 1
+    col1, col2, col3 = st.columns([2, 4, 2])
+    with col1:
+        if st.button("⬅️ Back", key="back_step2", use_container_width=True):
+            st.session_state["step"] -= 1
+    with col3:
+        if st.button("Next ➡️", key="next_step2", use_container_width=True):
+            st.session_state["step"] += 1
 
-# Step 3
+# Step 3: Writing frequency
 elif st.session_state["step"] == 3:
     ask_question(
         "How often do you engage in writing?",
@@ -103,10 +107,14 @@ elif st.session_state["step"] == 3:
         ["Daily", "Weekly", "Occasionally", "Rarely"],
         question_number=3,
     )
-    if st.button("Next ➡️", key="next_step3"):
-        st.session_state["step"] += 1
-    if st.button("⬅️ Back", key="back_step3"):
-        st.session_state["step"] -= 1
+    col1, col2, col3 = st.columns([2, 4, 2])
+    with col1:
+        if st.button("⬅️ Back", key="back_step3", use_container_width=True):
+            st.session_state["step"] -= 1
+    with col3:
+        if st.button("Next ➡️", key="next_step3", use_container_width=True):
+            st.session_state["step"] += 1
+
 
 # Step 4
 elif st.session_state["step"] == 4:
