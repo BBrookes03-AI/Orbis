@@ -1,33 +1,32 @@
- import streamlit as st
- from openai import OpenAI
- import os
- 
- # --- Configuration ---
- client = OpenAI(api_key=st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY")))
- 
- # --- Session State Initialization ---
- if "responses" not in st.session_state:
-     st.session_state["responses"] = {}
- if "step" not in st.session_state:
-     st.session_state["step"] = 0
--if "name" not in st.session_state:
--    st.session_state["name"] = ""
-+if "user_name" not in st.session_state:
-+    st.session_state["user_name"] = ""
- 
- # --- Page Setup ---
- st.set_page_config(page_title="Orbis Onboarding", layout="centered")
- st.markdown("### 🧭 Orbis Onboarding: Adaptive Learning Pathway")
- 
- st.markdown("""
- Welcome! Please answer the following questions to help us personalize your learning journey.
- 
- ---
- Your responses will guide your onboarding experience. No scores are generated—only personalized recommendations.
- 
- **Note:** This tool uses OpenAI's API for processing your responses. No personal data beyond your name is stored.
- ---
- """)
+import streamlit as st
+from openai import OpenAI
+import os
+
+# --- Configuration ---
+client = OpenAI(api_key=st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY")))
+
+# --- Session State Initialization ---
+if "responses" not in st.session_state:
+    st.session_state["responses"] = {}
+if "step" not in st.session_state:
+    st.session_state["step"] = 0
+if "user_name" not in st.session_state:
+    st.session_state["user_name"] = ""
+
+# --- Page Setup ---
+st.set_page_config(page_title="Orbis Onboarding", layout="centered")
+st.markdown("### 🧭 Orbis Onboarding: Adaptive Learning Pathway")
+
+st.markdown("""
+Welcome! Please answer the following questions to help us personalize your learning journey.
+
+---
+Your responses will guide your onboarding experience. No scores are generated—only personalized recommendations.
+
+**Note:** This tool uses OpenAI's API for processing your responses. No personal data beyond your name is stored.
+---
+""")
+
  
  # --- Helper Function ---
  def ask_question(label, key, options=None, text_input=False, question_number=None):
