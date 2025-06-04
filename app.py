@@ -28,18 +28,6 @@ Your responses will guide your onboarding experience. No scores are generated—
 ---
 """)
 
-# --- Disclaimer (Smaller Font at the Bottom) ---
-st.markdown(
-    """
-    <div style='font-size: 0.8em; color: gray; margin-top: 1em;'>
-        <strong>Note:</strong> This tool uses OpenAI's API for processing your responses. 
-        No personal data beyond your name is stored.
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-
 # --- Helper Function ---
 def ask_question(label, key, options=None, text_input=False, question_number=None):
     if question_number is not None:
