@@ -200,25 +200,46 @@ elif st.session_state["step"] == 6:
 
 # Step 7
 elif st.session_state["step"] == 7:
+    st.markdown("**Question 7**")
     ask_question(
         "Have you used tools like ChatGPT or Grammarly for school or work?",
         "ai_usage",
         ["Yes", "No"],
         question_number=7,
     )
-    if st.session_state["responses"].get("ai_usage") == "Yes":
+
+    ai_used = st.session_state["responses"].get("ai_usage")
+
+    if ai_used == "Yes":
         ask_question(
             "Are you aware of the course’s AI usage policy?",
             "ai_policy_awareness",
-            ["Yes", "No"],
+            ["Yes", "No"]
         )
+
+    elif ai_used == "No":
+        st.markdown(
+            "<div style='background-color:#f1f1f1; padding: 0.75em; border-left: 5px solid #4CAF50;'>"
+            "<strong>Note:</strong> This course will integrate AI tools to help students learn to use them ethically and effectively in the writing process."
+            "</div>",
+            unsafe_allow_html=True
+        )
+
+        ask_question(
+            "Are you aware of the course’s AI usage policy?",
+            "ai_policy_awareness",
+            ["Yes", "No"]
+        )
+
+    # Navigation buttons
     col1, col2, col3 = st.columns([2, 4, 2])
     with col1:
-        if st.button("⬅️ Back", key="back_step1", use_container_width=True):
+        if st.button("⬅️ Back", key="back_step7", use_container_width=True):
             st.session_state["step"] -= 1
     with col3:
-        if st.button("Next ➡️", key="next_step1", use_container_width=True):
+        if st.button("Next ➡️", key="next_step7", use_container_width=True):
             st.session_state["step"] += 1
+
 
 # Step 8
 elif st.session_state["step"] == 8:
