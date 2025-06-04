@@ -118,18 +118,39 @@ elif st.session_state["step"] == 3:
 
 # Step 4
 elif st.session_state["step"] == 4:
-    ask_question(
+    st.markdown("**Question 4**")
+
+options = [
+    "Emails",
+    "Blogs or Newsletters",
+    "Academic Papers",
+    "Social Media Posts",
+    "Technical Documentation",
+    "Creative Writing (Poetry, Stories)",
+    "Business Reports or Proposals",
+    "Personal Journals or Reflections"
+]
+
+# Split into two columns for layout
+col1, col2 = st.columns(2)
+half = len(options) // 2
+
+with col1:
+    selected_1 = st.multiselect(
         "What kinds of writing do you do most often?",
-        "writing_type",
-        [
-            "Emails",
-            "Blogs",
-            "Academic Papers",
-            "Social Media",
-            "Technical Reports",
-        ],
-        question_number=4,
+        options[:half],
+        key="writing_type_col1"
     )
+with col2:
+    selected_2 = st.multiselect(
+        " ",
+        options[half:],
+        key="writing_type_col2"
+    )
+
+# Combine selections and store them
+st.session_state["responses"]["writing_type"] = selected_1 + selected_2
+
     col1, col2, col3 = st.columns([2, 4, 2])
     with col1:
         if st.button("⬅️ Back", key="back_step1", use_container_width=True):
