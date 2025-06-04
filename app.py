@@ -173,19 +173,30 @@ elif st.session_state["step"] == 5:
 
 # Step 6
 elif st.session_state["step"] == 6:
-    ask_question(
-        "What books, genres, or topics do you enjoy reading or watching?",
-        "literature_preference",
-        text_input=True,
-        question_number=6,
+    st.markdown("**Question 6**")
+    st.markdown("What books, genres, or topics do you enjoy reading or watching?")
+
+    st.markdown(
+        "<span style='font-size: 0.9em; color: gray;'>💡 Press <strong>Enter</strong> after typing your answer to continue.</span>",
+        unsafe_allow_html=True
     )
+
+    ask_question(
+        label="Your answer:",
+        key="literature_preference",
+        text_input=True,
+        question_number=None,
+    )
+
+    # Navigation buttons
     col1, col2, col3 = st.columns([2, 4, 2])
     with col1:
-        if st.button("⬅️ Back", key="back_step1", use_container_width=True):
+        if st.button("⬅️ Back", key="back_step6", use_container_width=True):
             st.session_state["step"] -= 1
     with col3:
-        if st.button("Next ➡️", key="next_step1", use_container_width=True):
+        if st.button("Next ➡️", key="next_step6", use_container_width=True):
             st.session_state["step"] += 1
+
 
 # Step 7
 elif st.session_state["step"] == 7:
