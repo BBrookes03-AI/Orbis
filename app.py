@@ -1,9 +1,3 @@
-(cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
-diff --git a/app.py b/app.py
-index b6f180e7e31b519a01ab714762e75f6cdb69b767..8dfb2c358b7a51bb0ff26ef4491ca0aecbfa2482 100644
---- a/app.py
-+++ b/app.py
-@@ -1,150 +1,205 @@
  import streamlit as st
  from openai import OpenAI
  import os
